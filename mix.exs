@@ -31,7 +31,8 @@ defmodule Chargify.Mixfile do
       {:poison, "~> 2.0"},
       {:httpoison, "~> 0.9.1"},
       {:ex_doc, "~> 0.12", only: :dev},
-      {:exvcr, "~> 0.7", only: :test}
+      {:exvcr, "~> 0.7", only: :test},
+      {:uuid, "~> 1.1"}
     ]
   end
 end

@@ -3,23 +3,25 @@ defmodule RemoteProductTest do
 
   @tag :remote
   test "foo" do
+    product_family_name = UUID.uuid4(:hex)
+    product_name        = UUID.uuid4(:hex)
+    
     {:created, product_family} = Chargify.ProductFamilies.create(%{
-      "name" => "Acme Online",
-      "handle" => "acme-online",
+      "name" => product_family_name,
       "description" => "A product family",
     })
 
     product_family_id = product_family["id"]
 
     {:created, product} = Chargify.Products.create(%{
-      "name" => "Pro Plan",
+      "name" => product_name,
       "product_family_id" => product_family_id,
       "interval_unit" => "month",
       "interval" => 1,
       "price_in_cents" => 9900
     })
     assert %{
-      "name" => "Pro Plan",
+      "name" => product_name,
       "product_family" => %{
         "id" => product_family_id,
       },
@@ -30,8 +32,10 @@ defmodule RemoteProductTest do
 
     id = product["id"]
 
-    {:ok, products} = Chargify.Products.list(per_page: 1)
-    assert hd(products)["id"] == id
+    {:ok, products} = Chargify.Products.list
+    assert products
+      |> Enum.map(fn product -> Map.get(product, "id") end) 
+      |> Enum.member?(id)
 
     {:ok, product} = Chargify.Products.get(id)
     assert product["id"] == id
