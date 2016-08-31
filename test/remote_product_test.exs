@@ -2,7 +2,7 @@ defmodule RemoteProductTest do
   use ExUnit.Case
 
   @tag :remote
-  test "foo" do
+  test "Product CRUD integration" do
     product_family_name = UUID.uuid4(:hex)
     product_name        = UUID.uuid4(:hex)
 
@@ -39,5 +39,10 @@ defmodule RemoteProductTest do
 
     {:ok, product} = Chargify.Products.get(id)
     assert product["id"] == id
+    refute product["archived_at"]
+    
+    {:ok, product} = Chargify.Products.archive(id)
+    assert product["id"] == id
+    assert product["archived_at"]
   end
 end

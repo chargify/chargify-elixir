@@ -69,6 +69,11 @@ defmodule Chargify do
     HTTPoison.post!(url(path), encode(data), json_headers, auth_options)
     |> handle_response(options[:base_key])
   end
+  
+  def delete_json(path, options \\ []) do
+    HTTPoison.delete!(url(path), json_headers, auth_options)
+    |> handle_response(options[:base_key])
+  end
 
   defp handle_response(%HTTPoison.Response{} = response, base_key) do
     case response.status_code do

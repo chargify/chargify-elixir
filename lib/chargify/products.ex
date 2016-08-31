@@ -49,4 +49,14 @@ defmodule Chargify.Products do
       base_key: "product"
     )
   end
+
+  @doc """
+  Archive a Product by ID.
+  """
+  def archive(id) do
+    Chargify.delete_json(
+      "/products/#{id}",
+      base_key: "product"
+    )
+  end
 end
