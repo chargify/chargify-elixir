@@ -5,7 +5,7 @@ defmodule RemoteProductTest do
   test "foo" do
     product_family_name = UUID.uuid4(:hex)
     product_name        = UUID.uuid4(:hex)
-    
+
     {:created, product_family} = Chargify.ProductFamilies.create(%{
       "name" => product_family_name,
       "description" => "A product family",
@@ -34,7 +34,7 @@ defmodule RemoteProductTest do
 
     {:ok, products} = Chargify.Products.list
     assert products
-      |> Enum.map(fn product -> Map.get(product, "id") end) 
+      |> Enum.map(&(Map.get(&1, "id")))
       |> Enum.member?(id)
 
     {:ok, product} = Chargify.Products.get(id)
