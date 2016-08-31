@@ -40,7 +40,7 @@ defmodule RemoteProductTest do
     {:ok, product} = Chargify.Products.get(id)
     assert product["id"] == id
     refute product["archived_at"]
-    
+
     {:ok, product} = Chargify.Products.archive(id)
     assert product["id"] == id
     assert product["archived_at"]
