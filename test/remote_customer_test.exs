@@ -1,6 +1,7 @@
 defmodule RemoteCustomerTest do
   use ExUnit.Case
 
+  @tag :remote
   test "list customers and then get one of them" do
     {:created, customer} = Chargify.Customers.create(%{
       "first_name" => "Test",

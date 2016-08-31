@@ -1,6 +1,6 @@
 defmodule CustomerTest do
   use ExUnit.Case
-  use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
+  use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney, options: [clear_mock: true]
 
   test "list customers when there are none" do
     use_cassette :stub, [
