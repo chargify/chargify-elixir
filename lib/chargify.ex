@@ -73,7 +73,7 @@ defmodule Chargify do
   defp handle_response(%HTTPoison.Response{} = response, base_key) do
     case response.status_code do
       200 -> {:ok, decode(response.body, base_key)}
-      201 -> {:ok, decode(response.body, base_key)}
+      201 -> {:created, decode(response.body, base_key)}
       404 -> {:not_found, nil}
       422 -> {:invalid, decode(response.body, "errors")}
     end
@@ -118,11 +118,11 @@ defmodule Chargify do
   end
 
   defp subdomain do
-    Application.get_env(:chargify, :subdomain) || System.get_env "CHARGIFY_SUBDOMAIN"
+    System.get_env("CHARGIFY_SUBDOMAIN") || Application.get_env(:chargify, :subdomain)
   end
 
   defp api_key do
-    Application.get_env(:chargify, :api_key) || System.get_env "CHARGIFY_API_KEY"
+    System.get_env("CHARGIFY_API_KEY") || Application.get_env(:chargify, :api_key)
   end
 
   defp remove_nesting(data, nil), do: data
