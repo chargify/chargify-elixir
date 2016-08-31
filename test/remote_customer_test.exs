@@ -1,4 +1,4 @@
-defmodule CustomerTest do
+defmodule RemoteCustomerTest do
   use ExUnit.Case
 
   test "list customers and then get one of them" do
